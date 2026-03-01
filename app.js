@@ -41,21 +41,40 @@ async function cargarPosts() {
         });
         const isAuthor = post.author_id === deviceId;
         const likeCount = post.likes[0]?.count || 0;
+        const isFeatured = post.is_featured;
 
         const card = document.createElement('div');
-        card.className = 'post-card';
+        card.className = `post-card ${isFeatured ? 'featured' : ''}`;
         card.innerHTML = `
             <div class="post-content">${escapeHTML(post.content)}</div>
             <div class="post-meta">
                 <span>${date}</span>
                 <div class="post-actions">
                     <button class="btn-like" onclick="darLike('${post.id}')">❤️ ${likeCount}</button>
-                    ${isAuthor ? `<button class="btn-delete" onclick="borrarPost('${post.id}')">🗑️</button>` : ''}
+                    ${isAuthor ? `
+                        <button class="btn-star ${isFeatured ? 'active' : ''}" onclick="destacarPost('${post.id}', ${isFeatured})">⭐</button>
+                        <button class="btn-delete" onclick="borrarPost('${post.id}')">🗑️</button>
+                    ` : ''}
                 </div>
             </div>
         `;
         container.appendChild(card);
     });
+}
+
+// Función para DESTACAR (Alternar amarillo)
+async function destacarPost(postId, currentStatus) {
+    const { error } = await supabaseClient
+        .from('posts')
+        .update({ is_featured: !currentStatus })
+        .eq('id', postId)
+        .eq('author_id', deviceId);
+
+    if (error) {
+        alert("No se pudo destacar: " + error.message);
+    } else {
+        cargarPosts();
+    }
 }
 
 // Publicar un nuevo pensamiento
@@ -124,6 +143,7 @@ function escapeHTML(str) {
 // Exponer funciones al objeto window para poder usarlas en 'onclick'
 window.darLike = darLike;
 window.borrarPost = borrarPost;
+window.destacarPost = destacarPost;
 
 // --- SISTEMA DE NAVEGACIÓN (SPA) ---
 

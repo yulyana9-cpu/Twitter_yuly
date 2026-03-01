@@ -102,6 +102,15 @@ main {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Post DESTACADO (Amarillo Premium) */
+.post-card.featured {
+    background: rgba(255, 204, 0, 0.15);
+    /* Fondo amarillento suave */
+    border: 2px solid rgba(255, 204, 0, 0.4);
+    /* Borde dorado */
+    box-shadow: 0 8px 32px 0 rgba(255, 204, 0, 0.1);
+}
+
 .post-card:active {
     transform: scale(0.985);
 }
@@ -160,6 +169,25 @@ main {
     align-items: center;
     width: 38px;
     height: 38px;
+}
+
+.btn-star {
+    border: none;
+    background: rgba(255, 204, 0, 0.15);
+    color: #FFCC00;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+}
+
+.btn-star.active {
+    background: #FFCC00;
+    color: white;
 }
 
 /* Formulario de creación */
