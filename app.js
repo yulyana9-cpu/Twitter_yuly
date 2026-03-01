@@ -41,7 +41,7 @@ async function cargarPosts() {
         });
         const isAuthor = post.author_id === deviceId;
         const likeCount = post.likes[0]?.count || 0;
-        const isFeatured = post.is_featured;
+        const isFeatured = post.is_featured === true; // cast defensivo: null → false
 
         const card = document.createElement('div');
         card.className = `post-card ${isFeatured ? 'featured' : ''}`;
@@ -64,14 +64,18 @@ async function cargarPosts() {
 
 // Función para DESTACAR (Alternar amarillo)
 async function destacarPost(postId, currentStatus) {
-    const { error } = await supabaseClient
+    console.log('⭐ Actualizando post:', postId, '→ is_featured:', !currentStatus);
+    const { data, error } = await supabaseClient
         .from('posts')
         .update({ is_featured: !currentStatus })
         .eq('id', postId)
-        .eq('author_id', deviceId);
+        .eq('author_id', deviceId)
+        .select();
 
     if (error) {
         alert("No se pudo destacar: " + error.message);
+    } else if (!data || data.length === 0) {
+        alert("No se pudo destacar. Verifica que la política RLS de UPDATE esté activa en Supabase.");
     } else {
         cargarPosts();
     }
