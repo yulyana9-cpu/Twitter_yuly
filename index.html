@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TWITTER YULY</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Capa de iluminación de fondo -->
+    <div class="blob-bg"></div>
+
+    <header id="main-header">
+        <h1>TWITTER YULY</h1>
+    </header>
+
+    <main id="app">
+        <!-- Vista del Feed -->
+        <div id="feed-view" class="view active">
+            <div id="posts-container">
+                <p class="loading">Cargando pensamientos...</p>
+            </div>
+        </div>
+
+        <!-- Vista de Creación -->
+        <div id="new-post-view" class="view">
+            <div class="composer-card">
+                <h2>¿Qué estás pensando?</h2>
+                <textarea id="post-content" placeholder="Escribe algo asombroso..."></textarea>
+                <div class="composer-actions">
+                    <button id="btn-cancel" class="btn-secondary">Cancelar</button>
+                    <button id="btn-publish" class="btn-primary">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navegación Inferior Estilo iOS -->
+    <nav id="bottom-nav">
+        <a href="#" class="nav-item active" id="nav-home">
+            <span class="icon">🏠</span>
+            <span class="label">Inicio</span>
+        </a>
+        <a href="#new" class="nav-item" id="nav-new">
+            <span class="icon">➕</span>
+            <span class="label">Nuevo</span>
+        </a>
+    </nav>
+
+    <!-- Supabase SDK via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
